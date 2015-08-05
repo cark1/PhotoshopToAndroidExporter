@@ -32,7 +32,7 @@ function main(){
 	//buttonGroup
 	box.buttonGroup = box.add("group", undefined);  
 	box.buttonGroup.orientation="row";  
-	box.buttonGroup.saveButton = box.buttonGroup.add("button",undefined, "Save", {name:"Save"}); 
+	box.buttonGroup.saveButton = box.buttonGroup.add("button",undefined, "Save", {name:"Export"}); 
 	box.buttonGroup.closeButton = box.buttonGroup.add("button",undefined, "Cancel", {name:"Cancel"});  
   
 	box.buttonGroup.saveButton.onClick = function(){  
