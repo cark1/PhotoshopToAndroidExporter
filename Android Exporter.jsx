@@ -32,12 +32,14 @@ function main(){
 	//buttonGroup
 	box.buttonGroup = box.add("group", undefined);  
 	box.buttonGroup.orientation="row";  
-	box.buttonGroup.saveButton = box.buttonGroup.add("button",undefined, "Save", {name:"Export"}); 
+	box.buttonGroup.saveButton = box.buttonGroup.add("button",undefined, "Export", {name:"Export"}); 
 	box.buttonGroup.closeButton = box.buttonGroup.add("button",undefined, "Cancel", {name:"Cancel"});  
   
 	box.buttonGroup.saveButton.onClick = function(){  
-		startExport(box.settingsPanel.nameGroup.nameInput.text, box.settingsPanel.widthGroup.widthInput.text);
-		box.close();
+		var close = startExport(box.settingsPanel.nameGroup.nameInput.text, box.settingsPanel.widthGroup.widthInput.text);
+		if(close){
+			box.close();
+		}
 	}
 	
 	box.buttonGroup.closeButton.onClick = function(){  
@@ -51,10 +53,16 @@ function main(){
 
 function startExport(_name, _width){
 	
+	if(_name.length == 0){
+		alert("Insert the name");
+		return false;
+	}
+	
 	_width = parseInt(_width);
 	
 	if(isNaN(_width)){
-		alert("Insert a number for the xxhdpi width");
+		alert("Insert the xxhdpi width");
+		return false;
 	}
 	
 	var xxhdpiWidth = _width;
@@ -100,5 +108,7 @@ function startExport(_name, _width){
 	doc.saveAs(mdpiFile,pngSaveOptions,true,Extension.LOWERCASE);
 	
 	doc.close(SaveOptions.DONOTSAVECHANGES);
+	
+	return true;
 	
 }//startExport
