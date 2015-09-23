@@ -95,16 +95,16 @@ function startExport(_name, _width){
 	pngSaveOptions.interlaced=false;
 	
 	var doc = app.activeDocument.duplicate("tmp"); 
-	doc.resizeImage(xxhdpiWidth);
+	doc.resizeImage(UnitValue(xxhdpiWidth,"px"));
 	doc.saveAs(xxhdpiFile,pngSaveOptions,true,Extension.LOWERCASE);
 	
-	doc.resizeImage(xhdpiWidth);
+	doc.resizeImage(UnitValue(xhdpiWidth,"px"));
 	doc.saveAs(xhdpiFile,pngSaveOptions,true,Extension.LOWERCASE);
 	
-	doc.resizeImage(hdpiWidth);
+	doc.resizeImage(UnitValue(hdpiWidth,"px"));
 	doc.saveAs(hdpiFile,pngSaveOptions,true,Extension.LOWERCASE);
 	
-	doc.resizeImage(mdpiWidth);
+	doc.resizeImage(UnitValue(mdpiWidth,"px"));
 	doc.saveAs(mdpiFile,pngSaveOptions,true,Extension.LOWERCASE);
 	
 	doc.close(SaveOptions.DONOTSAVECHANGES);
