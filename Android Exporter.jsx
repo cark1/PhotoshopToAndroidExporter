@@ -26,7 +26,7 @@ function main(){
 	
 	box.settingsPanel.widthGroup = box.settingsPanel.add("group", undefined);  
 	box.settingsPanel.widthGroup.orientation="row";  
-	box.settingsPanel.widthGroup.widthLabel = box.settingsPanel.widthGroup.add("statictext", [25,40,120,60], "xxhdpi width");  
+	box.settingsPanel.widthGroup.widthLabel = box.settingsPanel.widthGroup.add("statictext", [25,40,120,60], "xxxhdpi width");  
 	box.settingsPanel.widthGroup.widthInput = box.settingsPanel.widthGroup.add("edittext",  [25,40,120,60], undefined);    
   	
 	//buttonGroup
@@ -61,11 +61,12 @@ function startExport(_name, _width){
 	_width = parseInt(_width);
 	
 	if(isNaN(_width)){
-		alert("Insert the xxhdpi width");
+		alert("Insert the xxxhdpi width");
 		return false;
 	}
 	
-	var xxhdpiWidth = _width;
+	var xxxhdpiWidth = _width;
+	var xxhdpiWidth = xxxhdpiWidth/4*3;
 	var xhdpiWidth = xxhdpiWidth/3*2;
 	var hdpiWidth = xxhdpiWidth/2;
 	var mdpiWidth = xhdpiWidth/2;
@@ -74,17 +75,20 @@ function startExport(_name, _width){
 	var name = _name;
 	
 	var mainFolder = Folder(path+"/"+name);
+	var xxxhdpiFolder = Folder(path+"/"+name+"/mipmap-xxxhdpi");
 	var xxhdpiFolder = Folder(path+"/"+name+"/mipmap-xxhdpi");
 	var xhdpiFolder = Folder(path+"/"+name+"/mipmap-xhdpi");
 	var hdpiFolder = Folder(path+"/"+name+"/mipmap-hdpi");
 	var mdpiFolder = Folder(path+"/"+name+"/mipmap-mdpi");
 		
 	mainFolder.create();
+	xxxhdpiFolder.create();
 	xxhdpiFolder.create();
 	xhdpiFolder.create();
 	hdpiFolder.create();
 	mdpiFolder.create();
 	
+	var xxxhdpiFile = File(xxxhdpiFolder+"/"+name+".png");
 	var xxhdpiFile = File(xxhdpiFolder+"/"+name+".png");
 	var xhdpiFile = File(xhdpiFolder+"/"+name+".png");
 	var hdpiFile = File(hdpiFolder+"/"+name+".png");
@@ -94,7 +98,11 @@ function startExport(_name, _width){
 	pngSaveOptions.compression = 9;
 	pngSaveOptions.interlaced=false;
 	
-	var doc = app.activeDocument.duplicate("tmp"); 
+	var doc = app.activeDocument.duplicate("tmp");
+	
+	doc.resizeImage(UnitValue(xxxhdpiWidth,"px"));
+	doc.saveAs(xxxhdpiFile,pngSaveOptions,true,Extension.LOWERCASE);
+	
 	doc.resizeImage(UnitValue(xxhdpiWidth,"px"));
 	doc.saveAs(xxhdpiFile,pngSaveOptions,true,Extension.LOWERCASE);
 	
